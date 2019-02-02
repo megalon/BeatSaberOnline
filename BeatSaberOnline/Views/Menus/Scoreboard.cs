@@ -18,6 +18,7 @@ namespace BeatSaberOnline.Views.Menus
         public TextMeshProUGUI text;
         public ulong clientIndex;
         public int place;
+        public bool failed;
 
         public ScoreboardEntry(ulong clientIndex, string name)
         {
@@ -29,7 +30,7 @@ namespace BeatSaberOnline.Views.Menus
         {
             this.place = place;
             if (this.text)
-                this.text.text = $"{place+1}.  <align=left>{name} - [{combo} combo]<line-height=0>\r\n<align=right>{score}<line-height=1em>";
+                this.text.text = $"{place + 1}.  <color=\"{(failed ? "red" : "white")}\"><align=left>{name} - [{combo} combo]<line-height=0>\r\n<align=right>{score}<line-height=1em>";
         }
     }
 
@@ -157,7 +158,7 @@ namespace BeatSaberOnline.Views.Menus
             _scoreboardEntries.Clear();
         }
 
-        public void UpsertScoreboardEntry(ulong clientIndex, string name, int score = 0, int combo = 0)
+        public void UpsertScoreboardEntry(ulong clientIndex, string name, int score = 0, int combo = 0, bool failed = false)
         {
             if (disabled) { return; }
                 ScoreboardEntry entry;
@@ -176,6 +177,7 @@ namespace BeatSaberOnline.Views.Menus
                     entry = _scoreboardEntries[clientIndex];
                     entry.score = score;
                     entry.combo = combo;
+                    entry.failed = failed;
                     entry.UpdateText(entry.place);
                 }
                 List<KeyValuePair<ulong, ScoreboardEntry>> sorted = _scoreboardEntries.ToList();
