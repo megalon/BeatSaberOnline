@@ -95,7 +95,7 @@ namespace BeatSaberOnline.Controllers
             ReflectionUtil.SetField(_playerInfo, fieldName, (fieldName == "playerTotalBlocks" || fieldName == "playerCutBlocks" ? ReflectionUtil.GetField<uint>(_playerInfo, fieldName) + value : value));
             if (fieldName == "playerScore")
             {
-                Scoreboard.Instance.UpsertScoreboardEntry(_playerInfo.playerId, _playerInfo.playerName, (int)_playerInfo.playerScore, (int)_playerInfo.playerComboBlocks, _playerInfo.playerEnergy <= 0 ? true : false);
+                Scoreboard.Instance.UpsertScoreboardEntry(_playerInfo.playerId, _playerInfo.playerName, (int)_playerInfo.playerScore, (int)_playerInfo.playerComboBlocks, _playerInfo.playerEnergy <= 0);
             }
         }
 
